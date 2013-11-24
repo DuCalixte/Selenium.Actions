@@ -47,9 +47,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Composite.cs" />
-    <Compile Include="Keyboard.cs" />
-    <Compile Include="Mouse.cs" />
+    <Compile Include="CompositeAction.cs" />
+    <Compile Include="InternalActionException.cs" />
+    <Compile Include="KeyboardAction.cs" />
+    <Compile Include="MouseAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
