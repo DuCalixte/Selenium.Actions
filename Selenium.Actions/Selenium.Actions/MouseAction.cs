@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.UI;
@@ -10,16 +7,16 @@ namespace Selenium.Actions
 {
     /// <summary>
     /// MouseAction extends Selenium, Selenium.Internal by providing alternative methods for mouse clicks and other mouse interactions.
-    /// These methods work with all major browsers supported by Selenium. 
+    /// These methods work with all major browsers supported by Selenium.
     /// </summary>
     public static class MouseAction
     {
         #region Click on objects
 
         /// <summary>
-        /// Alternative method for performing click on object with implicit driver.
+        /// Method performing a mouse click on object with implicit driver.
         /// </summary>
-        /// <param name="element">A IWebElement object, also utilized to create a new driver instance</param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
         public static void Click(this IWebElement element)
         {
             try
@@ -40,10 +37,10 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// Alternative method for performing click on object with explicit driver.
+        /// Method performing a mouse click on object with explicit driver.
         /// </summary>
-        /// <param name="driver">IWevDriver provided.</param>
-        /// <param name="element">IWebElement for the click.</param>
+        /// <param name="driver">IWebDriver provided.</param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
         public static void Click(this IWebDriver driver, IWebElement element)
         {
             try
@@ -62,9 +59,9 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse click with hold. It's using the IWebElement element with implicit driver.
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
         public static void ClickAndHold(this IWebElement element)
         {
             try
@@ -85,10 +82,10 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse click with hold and no release.
         /// </summary>
         /// <param name="driver">IWevDriver provided.</param>
-        /// <param name="element">IWebElement for the click.</param>
+        /// <param name="element">IWebElement element that receives the click and hold action.</param>
         public static void ClickAndHold(this IWebDriver driver, IWebElement element)
         {
             try
@@ -107,9 +104,9 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse right-click on a given IWebElement element.
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">IWebElement element that receives the right-click action.</param>
         public static void ContextClick(this IWebElement element)
         {
             try
@@ -130,7 +127,7 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse right-click on a given IWebElement element.
         /// </summary>
         /// <param name="driver">IWevDriver provided.</param>
         /// <param name="element">IWebElement for the click.</param>
@@ -152,12 +149,12 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a click on a given IWebElement element, and then waiting a given amount of time for another object to become visible.
         /// </summary>
-        /// <param name="element"></param>
-        /// <param name="otherElement"></param>
-        /// <param name="timespan"></param>
-        public static void ClickAndWait(this IWebElement element, By otherElement, int timespan = 5)
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="path">Path of element that needs to be visible after the mouse click action.</param>
+        /// <param name="timespan">The maximum time to wait for the element to be visible.</param>
+        public static void ClickAndWait(this IWebElement element, By path, int timespan = 5)
         {
             try
             {
@@ -170,24 +167,24 @@ namespace Selenium.Actions
                 action.MoveToElement(element).Click();
                 action.Build().Perform();
 
-                wait.Until(ExpectedConditions.ElementExists(otherElement));
-                wait.Until(ExpectedConditions.ElementIsVisible(otherElement));
+                wait.Until(ExpectedConditions.ElementExists(path));
+                wait.Until(ExpectedConditions.ElementIsVisible(path));
             }
             catch (Exception e)
             {
-                throw new InternalActionException(string.Format("Unable to click on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, otherElement,
+                throw new InternalActionException(string.Format("Unable to click on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, path,
                      e.Message, (e.InnerException == null ? "" : string.Format("\r\n\t- {0}", e.InnerException.Message))), e);
             }
         }
 
         /// <summary>
-        /// 
+        /// Method performing a click on a given IWebElement element, and then waiting a given amount of time for another object to become visible.
         /// </summary>
         /// <param name="driver"></param>
-        /// <param name="element"></param>
-        /// <param name="otherElement"></param>
-        /// <param name="timespan"></param>
-        public static void ClickAndWait(this IWebDriver driver, IWebElement element, By otherElement, int timespan = 5)
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="path">Path of element that needs to be visible after the mouse click action.</param>
+        /// <param name="timespan">The maximum time to wait for the element to be visible.</param>
+        public static void ClickAndWait(this IWebDriver driver, IWebElement element, By path, int timespan = 5)
         {
             try
             {
@@ -198,22 +195,22 @@ namespace Selenium.Actions
                 action.MoveToElement(element).Click();
                 action.Build().Perform();
 
-                wait.Until(ExpectedConditions.ElementExists(otherElement));
-                wait.Until(ExpectedConditions.ElementIsVisible(otherElement));
+                wait.Until(ExpectedConditions.ElementExists(path));
+                wait.Until(ExpectedConditions.ElementIsVisible(path));
             }
             catch (Exception e)
             {
-                throw new InternalActionException(string.Format("Unable to click on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, otherElement,
+                throw new InternalActionException(string.Format("Unable to click on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, path,
                      e.Message, (e.InnerException == null ? "" : string.Format("\r\n\t- {0}", e.InnerException.Message))), e);
             }
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse click action on an IWebElement element and wait page with specific title.
         /// </summary>
-        /// <param name="element"></param>
-        /// <param name="title"></param>
-        /// <param name="timespan"></param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="title">The new page title expected after click action.</param>
+        /// <param name="timespan">The maximum time to wait for the page title.</param>
         public static void ClickAndWait(this IWebElement element, string title, int timespan = 5)
         {
             try
@@ -237,12 +234,12 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a mouse click action on an IWebElement element and wait page with specific title.
         /// </summary>
-        /// <param name="driver"></param>
-        /// <param name="element"></param>
-        /// <param name="title"></param>
-        /// <param name="timespan"></param>
+        /// <param name="driver">IWebDriver provided.</param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="title">The new page title expected after click action.</param>
+        /// <param name="timespan">The maximum time to wait for the page title.</param>
         public static void ClickAndWait(this IWebDriver driver, IWebElement element, string title, int timespan = 5)
         {
             try
@@ -263,14 +260,14 @@ namespace Selenium.Actions
             }
         }
 
-        #endregion
+        #endregion Click on objects
 
         #region Hover Actions
 
         /// <summary>
-        /// 
+        /// Method is performing a mouse hover on a given IWebElement object.
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
         public static void Hover(this IWebElement element)
         {
             try
@@ -291,10 +288,10 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method is performing a mouse hover on a given IWebElement object.
         /// </summary>
-        /// <param name="driver"></param>
-        /// <param name="element"></param>
+        /// <param name="driver">IWebDriver object provided.</param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
         public static void Hover(this IWebDriver driver, IWebElement element)
         {
             try
@@ -313,12 +310,12 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method is performing a mouse hover on a given IWebElement object, it then waits for specific length of time for a new IWebElement object to be visible given its path.
         /// </summary>
-        /// <param name="element"></param>
-        /// <param name="otherElement"></param>
-        /// <param name="timespan"></param>
-        public static void HoverAndWait(this IWebElement element, By otherElement, int timespan = 5)
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="path">Path of element that needs to be visible after the mouse hover action.</param>
+        /// <param name="timespan">The maximum time to wait for the element to be visible.</param>
+        public static void HoverAndWait(this IWebElement element, By path, int timespan = 5)
         {
             try
             {
@@ -331,24 +328,24 @@ namespace Selenium.Actions
                 action.MoveByOffset(1, 1);
                 action.Build().Perform();
 
-                wait.Until(ExpectedConditions.ElementExists(otherElement));
-                wait.Until(ExpectedConditions.ElementIsVisible(otherElement));
+                wait.Until(ExpectedConditions.ElementExists(path));
+                wait.Until(ExpectedConditions.ElementIsVisible(path));
             }
             catch (Exception e)
             {
-                throw new InternalActionException(string.Format("Unable to perform a mouse hover on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, otherElement,
+                throw new InternalActionException(string.Format("Unable to perform a mouse hover on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, path,
                      e.Message, (e.InnerException == null ? "" : string.Format("\r\n\t- {0}", e.InnerException.Message))), e);
             }
         }
 
         /// <summary>
-        /// 
+        /// Method is performing a mouse hover on a given IWebElement object, it then waits for specific length of time for a new IWebElement object to be visible given its path.
         /// </summary>
-        /// <param name="driver"></param>
-        /// <param name="element"></param>
-        /// <param name="otherElement"></param>
-        /// <param name="timespan"></param>
-        public static void HoverAndWait(this IWebDriver driver, IWebElement element, By otherElement, int timespan = 5)
+        /// <param name="driver">IWebDriver object provided.</param>
+        /// <param name="element">IWebElement element that receives the click action.</param>
+        /// <param name="path">Path of element that needs to be visible after the mouse hover action.</param>
+        /// <param name="timespan">The maximum time to wait for the element to be visible.</param>
+        public static void HoverAndWait(this IWebDriver driver, IWebElement element, By path, int timespan = 5)
         {
             try
             {
@@ -359,25 +356,25 @@ namespace Selenium.Actions
                 action.MoveByOffset(1, 1);
                 action.Build().Perform();
 
-                wait.Until(ExpectedConditions.ElementExists(otherElement));
-                wait.Until(ExpectedConditions.ElementIsVisible(otherElement));
+                wait.Until(ExpectedConditions.ElementExists(path));
+                wait.Until(ExpectedConditions.ElementIsVisible(path));
             }
             catch (Exception e)
             {
-                throw new InternalActionException(string.Format("Unable to perform a mouse hover on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, otherElement,
+                throw new InternalActionException(string.Format("Unable to perform a mouse hover on object \"{0}\" or wait for new object to be visible \"{1}\".\r\nSee:\r\n\t- {2}{3}", element, path,
                      e.Message, (e.InnerException == null ? "" : string.Format("\r\n\t- {0}", e.InnerException.Message))), e);
             }
         }
 
-        #endregion
+        #endregion Hover Actions
 
         #region Drag & Drop
 
         /// <summary>
-        /// 
+        /// Method performing a drag and drop of a given element onto another element (preferably a container).
         /// </summary>
-        /// <param name="dragElement"></param>
-        /// <param name="dropElement"></param>
+        /// <param name="dragElement">Element to drag onto the drop element.</param>
+        /// <param name="dropElement">The drop element (a container).</param>
         public static void DragAndDrop(this IWebElement dragElement, IWebElement dropElement)
         {
             try
@@ -399,11 +396,11 @@ namespace Selenium.Actions
         }
 
         /// <summary>
-        /// 
+        /// Method performing a drag and drop of a given element onto another element (preferably a container).
         /// </summary>
         /// <param name="driver"></param>
-        /// <param name="dragElement"></param>
-        /// <param name="dropElement"></param>
+        /// <param name="dragElement">Element to drag onto the drop element.</param>
+        /// <param name="dropElement">The drop element (a container).</param>
         public static void DragAndDrop(this IWebDriver driver, IWebElement dragElement, IWebElement dropElement)
         {
             try
@@ -417,11 +414,11 @@ namespace Selenium.Actions
             }
             catch (Exception e)
             {
-                throw new InternalActionException(string.Format("Unable to drag object \"{0}\" onto drop area with object \"{1}\".\r\nSee:\r\n\t- {2}{3}", dragElement,dropElement,
+                throw new InternalActionException(string.Format("Unable to drag object \"{0}\" onto drop area with object \"{1}\".\r\nSee:\r\n\t- {2}{3}", dragElement, dropElement,
                      e.Message, (e.InnerException == null ? "" : string.Format("\r\n\t- {0}", e.InnerException.Message))), e);
             }
         }
 
-        #endregion
+        #endregion Drag & Drop
     }
 }
